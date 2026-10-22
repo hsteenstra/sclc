@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SCLC Admin</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E1C44">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M6 6h52v30c0 12-12 20-26 24C18 56 6 48 6 36z' fill='%23F4B527' stroke='%230E1C44' stroke-width='4'/%3E%3Ctext x='32' y='38' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%230E1C44'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Graduate&display=swap">
+  <link rel="stylesheet" href="sclc.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="index.html" aria-label="Back to the Morse SCLC bulletin">
+      <span class="crest" aria-hidden="true">SCLC</span>
+      <span class="brand-text"><strong>Morse SCLC</strong><small>Secretary's desk</small></span>
+    </a>
+    <div class="who" id="who" hidden><span>Signed in as <b id="whoEmail"></b></span><button class="btn btn-ghost btn-sm" id="signOut" type="button" style="color:var(--on-navy)">Sign out</button></div>
+    <a class="btn btn-gold btn-sm" href="index.html">View bulletin</a>
+  </div>
+</header>
+
+<main>
+  <section class="admin-hero">
+    <div class="wrap">
+      <div><span class="eyebrow" style="color:var(--gold)">Secretary's desk</span><h1>Update the bulletin</h1>
+        <p>Changes show up on the bulletin for everyone right away. After each meeting, use <b>Wrap up meeting</b> to post the minutes and move the bulletin to the next meeting, two weeks later.</p></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- Firebase not connected yet -->
+    <section class="panel gate" id="gateSetup" hidden>
+      <span class="eyebrow muted">One-time setup</span>
+      <h2>Connect the bulletin's database</h2>
+      <p>The bulletin needs a free Firebase project to save your updates. It takes about ten minutes. The full steps are in <code>SETUP.md</code>.</p>
+      <ol>
+        <li>Create a Firebase project and add a web app.</li>
+        <li>Paste the app's settings into <code>firebase-config.js</code>.</li>
+        <li>Turn on Firestore and Google sign-in, and paste in <code>firestore.rules</code>.</li>
+        <li>Add your email to the <code>admins</code> collection.</li>
+      </ol>
+    </section>
+
+    <!-- Signed out -->
+    <section class="panel gate" id="gateSignIn" hidden>
+      <span class="eyebrow muted">Admins only</span>
+      <h2>Sign in to edit the bulletin</h2>
+      <p>Use the Google account that's listed as an SCLC admin.</p>
+      <button class="btn btn-navy" id="signIn" type="button">Sign in with Google</button>
+      <p class="sug-msg" id="signInMsg" style="color:var(--warn)" role="alert"></p>
+    </section>
+
+    <!-- Signed in, not an admin -->
+    <section class="panel gate" id="gateDenied" hidden>
+      <span class="eyebrow muted">No access</span>
+      <h2>This account isn't an admin</h2>
+      <p id="deniedText">Ask the SCLC secretary to add your email as an admin, or sign in with a different Google account.</p>
+      <button class="btn btn-ghost" id="signOut2" type="button">Use a different account</button>
+    </section>
+  </div>
+
+  <div class="wrap admin-grid" id="adminGrid" hidden></div>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span><strong>Morse SCLC</strong> · Student Community Liaison · Morse High School</span>
+    <span><a href="index.html">Back to the bulletin</a></span>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form class="dlg" id="dlgForm">
+    <div class="dlg-head"><h2 id="dlgTitle">Edit</h2><button class="x" type="button" id="dlgX" aria-label="Close">×</button></div>
+    <div class="dlg-body" id="dlgFields"></div>
+    <div class="dlg-foot"><span class="dlg-err" id="dlgErr" role="alert"></span><button class="btn btn-ghost" type="button" id="dlgCancel">Cancel</button><button class="btn btn-navy" type="submit" id="dlgSubmit">Save</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>

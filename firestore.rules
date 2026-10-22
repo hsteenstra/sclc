@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Morse SCLC bulletin
+// - Anyone can read the bulletin.
+// - Anyone can drop a suggestion in the box (but not edit or delete one).
+// - Only people listed in the "admins" collection can change anything else.
+//   Each admin is a document whose ID is their Google email, in lowercase.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(database)/documents/admins/$(request.auth.token.email.lower()));
+    }
+
+    // Admins can check that they're on the list. The list is edited in the Firebase console only.
+    match /admins/{email} {
+      allow read: if request.auth != null && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+
+    match /suggestions/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['text', 'name', 'at', 'status'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 400
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 60
+        && request.resource.data.at is number
+        && request.resource.data.status == 'new';
+      allow update, delete: if isAdmin();
+    }
+
+    match /site/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /topics/{id}   { allow read: if true; allow write: if isAdmin(); }
+    match /meetings/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /todos/{id}    { allow read: if true; allow write: if isAdmin(); }
+    match /signups/{id}  { allow read: if true; allow write: if isAdmin(); }
+  }
+}

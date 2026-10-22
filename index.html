@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Morse SCLC Bulletin</title>
+  <meta name="description" content="The Morse High School Student Community Liaison bulletin: next meeting agenda, topics we're discussing, to-dos, sign-ups and past meetings.">
+  <meta name="theme-color" content="#0E1C44">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M6 6h52v30c0 12-12 20-26 24C18 56 6 48 6 36z' fill='%23F4B527' stroke='%230E1C44' stroke-width='4'/%3E%3Ctext x='32' y='38' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%230E1C44'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Graduate&display=swap">
+  <link rel="stylesheet" href="sclc.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#next" aria-label="Morse SCLC home">
+      <span class="crest" aria-hidden="true">SCLC</span>
+      <span class="brand-text"><strong>Morse SCLC</strong><small>Student Community Liaison · Morse High School</small></span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#next">Next meeting</a>
+      <a href="#topics">Topics</a>
+      <a href="#todo">To-do</a>
+      <a href="#signups">Sign-ups</a>
+      <a href="#suggest">Suggest</a>
+      <a href="#minutes">Past meetings</a>
+    </nav>
+  </div>
+</header>
+
+<main id="board">
+  <section class="hero" id="next">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <span class="eyebrow">Next meeting</span>
+        <h1 id="nextDate">Date coming soon</h1>
+        <div class="hero-meta" id="nextMeta"></div>
+        <p class="hero-title" id="nextTitle" hidden></p>
+        <p class="hero-notes" id="nextNotes" hidden></p>
+        <div class="cycle" id="cycle"><span class="cycle-label">We meet every other Wednesday</span></div>
+      </div>
+      <article class="notice" aria-labelledby="agendaH">
+        <span class="eyebrow">Posted by the secretary</span>
+        <h2 id="agendaH">Agenda</h2>
+        <div id="agenda"></div>
+        <p class="notice-foot">Something missing? <a href="#suggest">Suggest an agenda item</a></p>
+      </article>
+    </div>
+  </section>
+
+  <div class="wrap announce" id="announce" hidden>
+    <div class="announce-in"><span class="announce-tag">NOTICE</span><p id="announceText"></p></div>
+  </div>
+
+  <section class="wrap section" id="topics">
+    <div class="sec-head">
+      <div><span class="eyebrow">Topic portal</span><h2>On the table</h2></div>
+      <p>Everything we're talking through as a council, what we know so far, and where we landed.</p>
+    </div>
+    <div id="portal"></div>
+  </section>
+
+  <div class="wrap duo">
+    <section class="panel" id="todo">
+      <div class="panel-head"><h2>To-do</h2><span class="tally" id="todoTally"></span></div>
+      <div id="todoList"></div>
+    </section>
+    <section class="panel" id="signups">
+      <div class="panel-head"><h2>Sign-ups</h2><span class="tally" id="signTally"></span></div>
+      <div id="signList"></div>
+    </section>
+  </div>
+
+  <section class="wrap section" id="suggest">
+    <div class="sec-head">
+      <div><span class="eyebrow">Suggestion box</span><h2>Shape the next agenda</h2></div>
+      <p>Got something the council should bring up? Drop it here. The secretary reviews these before every meeting.</p>
+    </div>
+    <div class="suggest">
+      <form class="panel sug-form" id="sugForm" autocomplete="off">
+        <h3>Suggest an agenda item</h3>
+        <p>Keep it short. One idea per suggestion works best.</p>
+        <label for="sugText">Your idea</label>
+        <textarea id="sugText" rows="3" maxlength="400" required placeholder="e.g. Can we talk about longer passing periods?"></textarea>
+        <label for="sugName">Your name (optional)</label>
+        <input id="sugName" maxlength="60" placeholder="Leave blank to stay anonymous">
+        <div class="row"><span class="sug-msg" id="sugMsg" role="status"></span><button class="btn btn-gold" id="sugBtn" type="submit">Drop it in the box</button></div>
+      </form>
+      <div class="panel"><ul class="sug-list" id="sugList"></ul></div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="minutes">
+    <div class="sec-head">
+      <div><span class="eyebrow">Minutes</span><h2>Past meetings</h2></div>
+      <p>What we covered at each meeting, kept by the secretary.</p>
+    </div>
+    <div class="minutes" id="minuteList"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span><strong>Morse SCLC</strong> · Student Community Liaison · Morse High School</span>
+    <span>Meets every other Wednesday · <a href="admin.html">Secretary login</a></span>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module" src="bulletin.js"></script>
+</body>
+</html>
